@@ -3,12 +3,14 @@ from flask_cors import CORS
 from rembg import remove
 from PIL import Image
 import io
-
+import os
 
 app = Flask(__name__)
-
-# 👇 Allow requests from your frontend domain
 CORS(app)
+
+@app.route('/')
+def home():
+    return '✅ BG Remover is running!'
 
 @app.route('/remove-bg', methods=['POST'])
 def remove_bg():
@@ -27,6 +29,6 @@ def remove_bg():
     )
 
 if __name__ == '__main__':
-    import os
-    port = int(os.environ.get('PORT', 5000))  # 👈 Use Render-assigned port
+    port = int(os.environ.get('PORT', 5000))
+    print(f"✅ Starting server on port {port}...")
     app.run(host='0.0.0.0', port=port)
